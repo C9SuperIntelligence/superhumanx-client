@@ -11,4 +11,12 @@ interface Keypress {
   pressedAt: number
 }
 
-export type { TrackingRecord, Keypress }
+interface ProcessRecord {
+  activeAt: number
+  name: string
+  pid: number
+  cpu: number
+  memory: number
+}
+
+export type { TrackingRecord, Keypress, ProcessRecord }

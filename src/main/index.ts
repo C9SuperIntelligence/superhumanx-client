@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, autoUpdater, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -37,6 +37,20 @@ function createWindow(): void {
   }
 }
 
+function tryUpdateApp(): void {
+  if (is.dev) return
+
+  autoUpdater.setFeedURL({
+    url: `https://example.com/update/${process.platform}/${app.getVersion()}`
+  })
+
+  autoUpdater.on('update-downloaded', () => {
+    autoUpdater.quitAndInstall()
+  })
+
+  autoUpdater.checkForUpdates()
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -73,5 +87,5 @@ app.whenReady().then(() => {
 //   }
 // })
 //
-// // In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.
+
+tryUpdateApp()

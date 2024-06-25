@@ -1,20 +1,23 @@
-import { writable, get } from 'svelte/store'
+import { type Writable, writable, get } from 'svelte/store'
+import Trackers from './trackers'
 
-const isTracking = writable(false)
-const trackingStart = null
+const trackersStore: Writable<Trackers | null> = writable(null)
 
 function startTracking(): void {
-  if (get(isTracking)) return
-  trackingStart = Date.now()
-  isTracking.set(true)
+  const trackers = get(trackersStore)
+  if (trackers) return
+  trackersStore.set(new Trackers())
 
-  // Start tracking
+  // TODO: IPC notice
 }
 
 function stopTracking(): void {
-  if (!isTracking) return
-  isTracking.set(false)
-  // Stop tracking
+  const trackers = get(trackersStore)
+  if (!trackers) return
+  trackers.flushAll()
+  trackersStore.set(null)
+
+  // TODO: IPC notice
 }
 
-export { isTracking, startTracking, stopTracking }
+export { trackersStore, startTracking, stopTracking }

@@ -1,5 +1,5 @@
 import { Tray, Menu, type MenuItemConstructorOptions } from 'electron'
-import { isTracking, startTracking, stopTracking } from './tracking'
+import { trackersStore, startTracking, stopTracking } from './tracking'
 import { app } from 'electron/main'
 
 let tray: Tray | null = null
@@ -46,7 +46,7 @@ export function createTrayAndMenu(): void {
   tray = new Tray('resources/icon.png')
   tray.setToolTip('SuperhumanX')
   tray.setContextMenu(menu)
-  isTracking.subscribe((value) => {
+  trackersStore.subscribe((value) => {
     if (value) {
       statusMenuItem.label = 'Status: Tracking'
       startTrackingMenuItem.enabled = false

@@ -6,4 +6,9 @@ interface TrackingRecord<Finished extends boolean = boolean> {
   screenshotIds: Array<string>
 }
 
-export type { TrackingRecord }
+interface Keypress {
+  key: string
+  pressedAt: number
+}
+
+export type { TrackingRecord, Keypress }

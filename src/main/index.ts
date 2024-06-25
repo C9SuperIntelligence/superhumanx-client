@@ -1,4 +1,4 @@
-import { app, autoUpdater, BrowserWindow, ipcMain } from 'electron'
+import { app, autoUpdater, BrowserWindow, ipcMain, crashReporter } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { createTrayAndMenu } from './tray'
 import mainWindow from './mainWindow'
@@ -18,6 +18,14 @@ function tryUpdateApp(): void {
   })
 
   autoUpdater.checkForUpdates()
+}
+
+function setUpCrashReporter(): void {
+  crashReporter.start({
+    submitURL: 'https://example.com/crash-report',
+    productName: 'YourProductName',
+    uploadToServer: true
+  })
 }
 
 // This method will be called when Electron has finished
@@ -62,3 +70,4 @@ app.whenReady().then(() => {
 //
 
 tryUpdateApp()
+setUpCrashReporter()

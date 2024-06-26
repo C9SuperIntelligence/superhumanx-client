@@ -25,4 +25,10 @@ interface PointerRecord {
   y: number
 }
 
-export type { TrackingRecord, Keypress, ProcessRecord, PointerRecord }
+interface FileRecord {
+  openedAt: number
+  path: string
+  processName: string
+}
+
+export type { TrackingRecord, Keypress, ProcessRecord, PointerRecord, FileRecord }

@@ -4,6 +4,7 @@
 // import PointerTracker from './PointerTracker'
 // import FileTracker from './FileTracker'
 import ExternalTracker from './ExternalTracker'
+import { promisified as regedit } from 'regedit'
 
 const SECOND = 1000
 
@@ -13,15 +14,33 @@ class Trackers {
   // private connectionTracker: ConnectionTracker = new ConnectionTracker()
   // private pointerTracker: PointerTracker = new PointerTracker()
   // private fileTracker: FileTracker = new FileTracker()
-  private inputTracker: ExternalTracker = new ExternalTracker('input_monitor.exe')
-  private processTracker: ExternalTracker = new ExternalTracker('process_monitor.exe')
-  private connectionTracker: ExternalTracker = new ExternalTracker('net_monitor.exe')
-  private screenTracker: ExternalTracker = new ExternalTracker('screen_monitor.exe')
-  private windowTracker: ExternalTracker = new ExternalTracker('window_monitor.exe')
-  private fileTracker: ExternalTracker = new ExternalTracker('file_handle_monitor.exe')
-  private printTracker: ExternalTracker = new ExternalTracker('print_monitor.exe')
-  constructor() {
-    this.scheduleFlushes()
+  private inputTracker: ExternalTracker
+  private processTracker: ExternalTracker
+  private connectionTracker: ExternalTracker
+  private screenTracker: ExternalTracker
+  private windowTracker: ExternalTracker
+  private fileTracker: ExternalTracker
+  private printTracker: ExternalTracker
+  // constructor() {
+  // this.scheduleFlushes()
+  // }
+  start(token: string): void {
+    if (process.platform !== 'win32') return
+    regedit.putValue({
+      'HKCU\\SoftwareSuperHumanX Client': {
+        token: {
+          value: token,
+          type: 'REG_SZ'
+        }
+      }
+    })
+    this.inputTracker = new ExternalTracker('input_monitor.exe')
+    this.processTracker = new ExternalTracker('process_monitor.exe')
+    this.connectionTracker = new ExternalTracker('net_monitor.exe')
+    this.screenTracker = new ExternalTracker('screen_monitor.exe')
+    this.windowTracker = new ExternalTracker('window_monitor.exe')
+    this.fileTracker = new ExternalTracker('file_handle_monitor.exe')
+    this.printTracker = new ExternalTracker('print_monitor.exe')
   }
   async flushAll(): Promise<void> {
     // console.log(this.keylogger.flush())
@@ -32,6 +51,7 @@ class Trackers {
   }
 
   async killAll(): Promise<void> {
+    if (process.platform !== 'win32') return
     this.inputTracker.kill()
     this.processTracker.kill()
     this.connectionTracker.kill()

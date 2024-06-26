@@ -19,4 +19,10 @@ interface ProcessRecord {
   memory: number
 }
 
-export type { TrackingRecord, Keypress, ProcessRecord }
+interface PointerRecord {
+  pressedAt: number
+  x: number
+  y: number
+}
+
+export type { TrackingRecord, Keypress, ProcessRecord, PointerRecord }

@@ -3,8 +3,9 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { createTrayAndMenu } from './tray'
 import mainWindow from './mainWindow'
 // import data from './data'
-import { createAuthWindow } from './authWindow'
-// import auth0 from './auth'
+import auth0 from './auth'
+
+let userToken: string | null = null
 
 function tryUpdateApp(): void {
   if (is.dev) return
@@ -28,6 +29,10 @@ function setUpCrashReporter(): void {
   })
 }
 
+async function initAuth(): Promise<void> {
+  userToken = await auth0.getToken()
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -46,11 +51,7 @@ app.whenReady().then(() => {
   ipcMain.on('ping', () => console.log('pong'))
   createTrayAndMenu()
   mainWindow()
-  createAuthWindow()
-  // ;(async (): Promise<void> => {
-  //   const token = await auth0.getToken()
-  //   console.log('token', token)
-  // })()
+  initAuth()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

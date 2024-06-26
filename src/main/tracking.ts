@@ -14,7 +14,7 @@ function startTracking(): void {
 function stopTracking(): void {
   const trackers = get(trackersStore)
   if (!trackers) return
-  trackers.flushAll()
+  trackers.killAll()
   trackersStore.set(null)
 
   // TODO: IPC notice

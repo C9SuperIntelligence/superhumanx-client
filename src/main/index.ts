@@ -3,7 +3,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { createTrayAndMenu } from './tray'
 import mainWindow from './mainWindow'
 // import data from './data'
-// import { createAuthWindow } from './authWindow'
+import { createAuthWindow } from './authWindow'
 // import auth0 from './auth'
 
 function tryUpdateApp(): void {
@@ -46,7 +46,7 @@ app.whenReady().then(() => {
   ipcMain.on('ping', () => console.log('pong'))
   createTrayAndMenu()
   mainWindow()
-  // createAuthWindow()
+  createAuthWindow()
   // ;(async (): Promise<void> => {
   //   const token = await auth0.getToken()
   //   console.log('token', token)

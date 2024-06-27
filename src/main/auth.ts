@@ -7,9 +7,9 @@ import 'dotenv/config'
 export default auth0Login({
   // Get these values from your Auth0 application console
   auth0: {
-    audience: process.env.API_IDENTIFIER,
-    clientId: process.env.AUTH0_CLIENT_ID,
-    domain: process.env.AUTH0_DOMAIN,
+    audience: process.env.API_IDENTIFIER as string,
+    clientId: process.env.AUTH0_CLIENT_ID as string,
+    domain: process.env.AUTH0_DOMAIN as string,
     scopes: 'these will be custom to your application'
   }
 })

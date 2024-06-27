@@ -6,7 +6,7 @@ class ExternalTracker {
   constructor(executable: string) {
     console.log(`Tracking external process: ${executable}`)
     const executablePath = join(__dirname, '..', '..', 'resources', executable)
-    this.pid = spawn(executablePath).pid
+    this.pid = spawn(executablePath).pid as number
   }
   public kill(): void {
     console.log('Killing external process')

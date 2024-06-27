@@ -1,19 +1,20 @@
 import netstat from 'node-netstat'
+import type { ConnectionRecord } from '../../types'
 
 class ConnectionTracker {
-  private static connections: Array<object> = []
+  private static connections: Array<ConnectionRecord> = []
   constructor() {
     ConnectionTracker.connections = []
     this.track()
   }
   track(): void {
-    netstat({}, (connection: object) => {
+    netstat({}, (connection) => {
       ConnectionTracker.connections.push({
-        estabilishedAt: Date.now(),
-        localAddress: connection.local.address,
-        localPort: connection.local.port,
-        remoteAddress: connection.remote.address,
-        remotePort: connection.remote.port,
+        establishedAt: Date.now(),
+        localAddress: connection.local.address as string,
+        localPort: connection.local.port as number,
+        remoteAddress: connection.remote.address as string,
+        remotePort: connection.remote.port as number,
         state: connection.state,
         pid: connection.pid,
         protocol: connection.protocol

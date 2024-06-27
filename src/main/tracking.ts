@@ -5,9 +5,10 @@ import auth0 from './auth'
 const trackersStore: Writable<Trackers | null> = writable(null)
 
 async function startTracking(): Promise<void> {
-  const trackers = get(trackersStore)
+  let trackers = get(trackersStore)
   if (trackers) return
-  trackersStore.set(new Trackers())
+  trackers = new Trackers()
+  trackersStore.set(trackers)
   const userToken = await auth0.getToken()
   trackers.start(userToken)
 

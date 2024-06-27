@@ -1,4 +1,4 @@
-import { GlobalKeyboardListener } from 'node-global-key-listener'
+import { GlobalKeyboardListener, type IGlobalKeyEvent } from 'node-global-key-listener'
 import { Keypress } from '../../types'
 
 class Keylogger {
@@ -8,9 +8,9 @@ class Keylogger {
     Keylogger.buffer = []
     Keylogger.listener.addListener(Keylogger.log)
   }
-  private static log(event: { name: string }): void {
+  private static log(event: IGlobalKeyEvent): void {
     this.buffer.push({
-      key: event.name,
+      key: event.name as string,
       pressedAt: Date.now()
     })
   }

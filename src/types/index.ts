@@ -6,6 +6,17 @@ interface TrackingRecord<Finished extends boolean = boolean> {
   screenshotIds: Array<string>
 }
 
+interface ConnectionRecord {
+  establishedAt: number
+  localAddress: string
+  localPort: number
+  remoteAddress: string
+  remotePort: number
+  state: string
+  pid: number
+  protocol: string
+}
+
 interface Keypress {
   key: string
   pressedAt: number
@@ -31,4 +42,4 @@ interface FileRecord {
   processName: string
 }
 
-export type { TrackingRecord, Keypress, ProcessRecord, PointerRecord, FileRecord }
+export type { TrackingRecord, ConnectionRecord, Keypress, ProcessRecord, PointerRecord, FileRecord }

@@ -1,3 +1,4 @@
+// @ts-ignore: Unreachable code error
 import iohook from 'uiohook-napi'
 import type { PointerRecord } from '../../types'
 

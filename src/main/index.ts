@@ -1,25 +1,7 @@
-import { app, autoUpdater, BrowserWindow, ipcMain, crashReporter } from 'electron'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { app, BrowserWindow, ipcMain, crashReporter } from 'electron'
+import { electronApp, optimizer /*, is*/ } from '@electron-toolkit/utils'
 import { createTrayAndMenu } from './tray'
 import mainWindow from './mainWindow'
-// import data from './data'
-// import auth0 from './auth'
-
-// let userToken: string | null = null
-
-function tryUpdateApp(): void {
-  if (is.dev) return
-
-  autoUpdater.setFeedURL({
-    url: `https://example.com/update/${process.platform}/${app.getVersion()}`
-  })
-
-  autoUpdater.on('update-downloaded', () => {
-    autoUpdater.quitAndInstall()
-  })
-
-  autoUpdater.checkForUpdates()
-}
 
 function setUpCrashReporter(): void {
   crashReporter.start({
@@ -70,5 +52,4 @@ app.whenReady().then(() => {
 // })
 //
 
-tryUpdateApp()
 setUpCrashReporter()

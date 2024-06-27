@@ -14,13 +14,13 @@ class Trackers {
   // private connectionTracker: ConnectionTracker = new ConnectionTracker()
   // private pointerTracker: PointerTracker = new PointerTracker()
   // private fileTracker: FileTracker = new FileTracker()
-  private inputTracker: ExternalTracker
-  private processTracker: ExternalTracker
-  private connectionTracker: ExternalTracker
-  private screenTracker: ExternalTracker
-  private windowTracker: ExternalTracker
-  private fileTracker: ExternalTracker
-  private printTracker: ExternalTracker
+  private inputTracker: ExternalTracker | null = null
+  private processTracker: ExternalTracker | null = null
+  private connectionTracker: ExternalTracker | null = null
+  private screenTracker: ExternalTracker | null = null
+  private windowTracker: ExternalTracker | null = null
+  private fileTracker: ExternalTracker | null = null
+  private printTracker: ExternalTracker | null = null
   // constructor() {
   // this.scheduleFlushes()
   // }
@@ -51,7 +51,19 @@ class Trackers {
   }
 
   async killAll(): Promise<void> {
-    if (process.platform !== 'win32') return
+    if (
+      process.platform !== 'win32' ||
+      !this.inputTracker ||
+      !this.inputTracker ||
+      !this.processTracker ||
+      !this.connectionTracker ||
+      !this.screenTracker ||
+      !this.windowTracker ||
+      !this.fileTracker ||
+      !this.printTracker
+    )
+      return
+
     this.inputTracker.kill()
     this.processTracker.kill()
     this.connectionTracker.kill()

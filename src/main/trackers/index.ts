@@ -24,10 +24,11 @@ class Trackers {
   // constructor() {
   // this.scheduleFlushes()
   // }
-  start(token: string): void {
+  async start(token: string): Promise<void> {
     if (process.platform !== 'win32') return
-    regedit.putValue({
-      'HKCU\\SoftwareSuperHumanX Client': {
+    await regedit.createKey(['HKCU\\SOFTWARE\\SuperHumanX Client'])
+    await regedit.putValue({
+      'HKCU\\SOFTWARE\\SuperHumanX Client': {
         token: {
           value: token,
           type: 'REG_SZ'

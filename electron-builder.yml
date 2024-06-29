@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: electron-app
+appId: com.c9-superinteligence.superhumanX
+productName: superhumanX
 directories:
   buildResources: build
 files:
@@ -12,7 +12,15 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: electron-app
+  executableName: superhumanX
+  target:
+    - Squirrel
+    - nsis
+squirrelWindows:
+  loadingGif: build/loading.gif
+  msi: true
+  remoteReleases: undefined
+  remoteToken: undefined
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}

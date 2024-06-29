@@ -1,7 +1,8 @@
 import { app, BrowserWindow, ipcMain, crashReporter } from 'electron'
 import { electronApp, optimizer /*, is*/ } from '@electron-toolkit/utils'
 import { createTrayAndMenu } from './tray'
-import mainWindow from './mainWindow'
+import { createMainWindow } from './mainWindow'
+import { startTracking, stopTracking } from './tracking'
 
 function setUpCrashReporter(): void {
   crashReporter.start({
@@ -29,16 +30,16 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  ipcMain.on('tracking-start', startTracking)
+  ipcMain.on('tracking-stop', stopTracking)
   createTrayAndMenu()
-  mainWindow()
+  createMainWindow()
   // initAuth()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) mainWindow()
+    if (BrowserWindow.getAllWindows().length === 0) createMainWindow()
   })
 })
 

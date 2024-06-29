@@ -3,9 +3,11 @@ import { join } from 'path'
 import { is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
-function createWindow(): void {
+let mainWindow
+
+function createMainWindow(): BrowserWindow {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 300,
     height: 500,
 
@@ -35,6 +37,12 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+  return mainWindow
 }
 
-export default createWindow
+function getMainWindow(): BrowserWindow {
+  if (mainWindow) return mainWindow
+  else return createMainWindow()
+}
+
+export { createMainWindow, getMainWindow }

@@ -3,7 +3,7 @@ interface TrackingRecord<Finished extends boolean = boolean> {
   label: string
   startTime: number
   endTime: Finished extends true ? number : null
-  screenshotIds: Array<string>
+  // screenshotIds: Array<string>
 }
 
 interface ConnectionRecord {

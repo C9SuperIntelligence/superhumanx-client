@@ -8,17 +8,19 @@ function createWindow(): void {
   const mainWindow = new BrowserWindow({
     width: 300,
     height: 500,
+
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
+      preload: join(__dirname, '../preload/index.mjs'),
       sandbox: false
     }
   })
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.showInactive()
+    mainWindow.webContents.openDevTools()
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {

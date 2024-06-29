@@ -1,4 +1,5 @@
-import { Tray, Menu, type MenuItemConstructorOptions } from 'electron'
+import { Tray, Menu, type MenuItemConstructorOptions, nativeImage } from 'electron'
+import appIcon from '../../build/icon.png?asset'
 import { trackersStore, startTracking, stopTracking } from './tracking'
 import { app } from 'electron/main'
 
@@ -43,7 +44,7 @@ const menuTemplate = [
 let menu = Menu.buildFromTemplate(menuTemplate)
 
 export function createTrayAndMenu(): void {
-  tray = new Tray('resources/icon.png')
+  tray = new Tray(nativeImage.createFromPath(appIcon))
   tray.setToolTip('SuperhumanX')
   tray.setContextMenu(menu)
   trackersStore.subscribe((value) => {

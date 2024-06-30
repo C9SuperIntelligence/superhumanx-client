@@ -22,6 +22,13 @@ class Controller {
   getHistory(): Array<TrackingRecord> {
     return this.data.records.filter((record) => !record.endTime || !isOlderThanDay(record.endTime))
   }
+  updateMemo(memo: string): void {
+    if (!this.data.currentRecord) return
+    this.data.currentRecord.label = memo
+    const mainWindow = getMainWindow()
+    mainWindow.webContents.send('memo-updated', this.data.currentRecord)
+    Controller.database.write()
+  }
   startTracking(): void {
     if (this.data.currentRecord) return
     const recordCount = this.data.records.length

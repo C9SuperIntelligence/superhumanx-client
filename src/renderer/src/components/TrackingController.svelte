@@ -20,8 +20,13 @@
   function handleTrackingStop(): void {
     currentTracking = null
   }
-  function updateCurrentTime() {
+  function updateCurrentTime(): void {
     currentTime = Date.now()
+  }
+  function handleMemoChange(event: Event): void {
+    const element = event.target as HTMLInputElement
+    const value = element.value
+    window.electron.ipcRenderer.send('tracking-memo', value)
   }
 
   setInterval(updateCurrentTime, 1000)
@@ -40,6 +45,7 @@
       title="Input (text)"
       type="text"
       placeholder="Memo"
+      on:change={handleMemoChange}
     />
     <button on:click={requestStopTracking} type="button" class="btn variant-filled"><Stop /></button
     >

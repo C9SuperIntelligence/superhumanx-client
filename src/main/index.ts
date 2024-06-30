@@ -37,6 +37,9 @@ app.whenReady().then(() => {
     const history = data.getHistory()
     event.reply('history', history)
   })
+  ipcMain.on('tracking-memo', (_, memo) => {
+    data.updateMemo(memo)
+  })
   createTrayAndMenu()
   createMainWindow()
   // initAuth()

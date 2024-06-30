@@ -4,6 +4,7 @@
   import Timer from './Timer.svelte'
   import Play from './icons/Play.svelte'
   import Stop from './icons/Stop.svelte'
+  import { fade } from 'svelte/transition'
 
   let currentTracking: TrackingRecord | null = null
   let currentTime: number = 0
@@ -36,23 +37,28 @@
 
 {#if currentTracking}
   <div class="flex flex-wrap justify-center">
-    <h2 class="h2 w-full text-center">
+    <h2 class="h2 w-auto text-center p-3 mt-3 bg-white text-black rounded" in:fade>
       <Timer start={currentTracking.startTime} end={currentTime} />
     </h2>
 
     <input
-      class="input text-center m-3 border-0"
+      class="input text-center bg-white text-black m-3 border-0"
       title="Input (text)"
       type="text"
       placeholder="Memo"
       on:change={handleMemoChange}
+      in:fade
     />
-    <button on:click={requestStopTracking} type="button" class="btn variant-filled rounded-full m-2"
-      ><Stop /></button
+    <button
+      on:click={requestStopTracking}
+      type="button"
+      class="btn variant-filled rounded-full p-4 m-2"><Stop /></button
     >
   </div>
 {:else}
-  <button on:click={requestStartTracking} type="button" class="btn variant-filled rounded-full m-2"
-    ><Play /></button
+  <button
+    on:click={requestStartTracking}
+    type="button"
+    class="btn variant-filled rounded-full p-3 m-2"><Play /></button
   >
 {/if}

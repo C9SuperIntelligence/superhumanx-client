@@ -1,8 +1,8 @@
 <script lang="ts">
-  import History from './components/History.svelte'
-  import TrackingController from './components/TrackingController.svelte'
   import type { TrackingRecord } from '../../types/index.ts'
   import type { IpcRendererEvent } from 'electron'
+  import History from './components/History.svelte'
+  import TrackingController from './components/TrackingController.svelte'
   import Timer from './components/Timer.svelte'
 
   let history: Array<TrackingRecord> = []
@@ -22,11 +22,10 @@
 </script>
 
 <div class="h-full flex flex-col">
-  <div class="flex-grow flex justify-center items-center">
+  <div class="min-h-[33%] flex justify-center items-center">
     <TrackingController />
   </div>
-  <hr />
-  <div class="flex-grow-[2] p-3">
+  <div class="flex-grow p-3">
     <History {history} />
     <div class="text-center pb-1">
       Total for last 24 hours: <Timer start={0} end={totalTime} />

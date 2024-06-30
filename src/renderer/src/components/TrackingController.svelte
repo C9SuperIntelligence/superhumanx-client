@@ -47,9 +47,12 @@
       placeholder="Memo"
       on:change={handleMemoChange}
     />
-    <button on:click={requestStopTracking} type="button" class="btn variant-filled"><Stop /></button
+    <button on:click={requestStopTracking} type="button" class="btn variant-filled rounded-full m-2"
+      ><Stop /></button
     >
   </div>
 {:else}
-  <button on:click={requestStartTracking} type="button" class="btn variant-filled"><Play /></button>
+  <button on:click={requestStartTracking} type="button" class="btn variant-filled rounded-full m-2"
+    ><Play /></button
+  >
 {/if}

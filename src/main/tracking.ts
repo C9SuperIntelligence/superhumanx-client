@@ -8,23 +8,23 @@ const trackersStore: Writable<Trackers | null> = writable(null)
 async function startTracking(): Promise<void> {
   let trackers = get(trackersStore)
   if (trackers) return
-  let userToken: string
-  try {
-    userToken = await auth0.getToken()
-  } catch (error) {
-    console.error(error)
-    return
-  }
+  // let userToken: string
+  // try {
+  //   userToken = await auth0.getToken()
+  // } catch (error) {
+  //   console.error(error)
+  //   return
+  // }
   trackers = new Trackers()
   trackersStore.set(trackers)
-  trackers.start(userToken)
+  // trackers.start(userToken)
   data.startTracking()
 }
 
 function stopTracking(): void {
   const trackers = get(trackersStore)
   if (!trackers) return
-  trackers.killAll()
+  // trackers.killAll()
   trackersStore.set(null)
   data.stopTracking()
 }

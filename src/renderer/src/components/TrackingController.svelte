@@ -15,7 +15,7 @@
   function requestStopTracking(): void {
     window.electron.ipcRenderer.send('tracking-stop')
   }
-  function handleTrackingStart(event: IpcRendererEvent, tracking: TrackingRecord): void {
+  function handleTrackingStart(_: IpcRendererEvent, tracking: TrackingRecord): void {
     currentTracking = tracking
   }
   function handleTrackingStop(): void {

@@ -6,6 +6,7 @@
   import Stop from './icons/Stop.svelte'
 
   let currentTracking: TrackingRecord | null = null
+  let currentTime: number = 0
 
   function requestStartTracking(): void {
     window.electron.ipcRenderer.send('tracking-start')
@@ -19,14 +20,21 @@
   function handleTrackingStop(): void {
     currentTracking = null
   }
+  function updateCurrentTime() {
+    currentTime = Date.now()
+  }
 
+  setInterval(updateCurrentTime, 1000)
   window.electron.ipcRenderer.on('tracking-started', handleTrackingStart)
   window.electron.ipcRenderer.on('tracking-stopped', handleTrackingStop)
 </script>
 
 {#if currentTracking}
   <div class="flex flex-wrap justify-center">
-    <Timer start={currentTracking.startTime} />
+    <h2 class="h2 w-full text-center">
+      <Timer start={currentTracking.startTime} end={currentTime} />
+    </h2>
+
     <input
       class="input text-center m-3 border-0"
       title="Input (text)"

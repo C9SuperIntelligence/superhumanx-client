@@ -1,10 +1,17 @@
-@import url("./font/nunito/nunito.css");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* :root { */
+/*     --theme-font-family-base: Nunito, sans-serif; */
+/*     --theme-font-family-heading: Nunito, sans-serif !important; */
+/* } */
+
+body, .h1, .h2, .h3, .h4, .h5 {
+    font-family: Nunito;
+}
+
 html, body, #app {
-	font-family: Nunito !important;
   height: 100%;
   width: 100%;
   background-color: #0e0e1e;

@@ -3,7 +3,6 @@
   import type { IpcRendererEvent } from 'electron'
   import History from './components/History.svelte'
   import TrackingController from './components/TrackingController.svelte'
-  import Timer from './components/Timer.svelte'
 
   let history: Array<TrackingRecord> = []
   let totalTime: number = 0
@@ -26,9 +25,6 @@
     <TrackingController />
   </div>
   <div class="flex-grow p-3">
-    <History {history} />
-    <div class="text-center pb-1">
-      Total for last 24 hours: <Timer start={0} end={totalTime} />
-    </div>
+    <History {history} {totalTime} />
   </div>
 </div>

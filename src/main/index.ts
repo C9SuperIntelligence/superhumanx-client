@@ -3,6 +3,7 @@ import { electronApp, optimizer /*, is*/ } from '@electron-toolkit/utils'
 import { createTrayAndMenu } from './tray'
 import { createMainWindow } from './mainWindow'
 import { startTracking, stopTracking } from './tracking'
+import data from './data'
 
 function setUpCrashReporter(): void {
   crashReporter.start({
@@ -32,6 +33,13 @@ app.whenReady().then(() => {
 
   ipcMain.on('tracking-start', startTracking)
   ipcMain.on('tracking-stop', stopTracking)
+  ipcMain.on('get-history', (event) => {
+    const history = data.getHistory()
+    event.reply('history', history)
+  })
+  ipcMain.on('tracking-memo', (_, memo) => {
+    data.updateMemo(memo)
+  })
   createTrayAndMenu()
   createMainWindow()
   // initAuth()

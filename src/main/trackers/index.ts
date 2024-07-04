@@ -55,7 +55,6 @@ class Trackers {
     if (
       process.platform !== 'win32' ||
       !this.inputTracker ||
-      !this.inputTracker ||
       !this.processTracker ||
       !this.connectionTracker ||
       !this.screenTracker ||

@@ -1,9 +1,9 @@
 import { app, BrowserWindow, ipcMain, crashReporter } from 'electron'
 import { electronApp, optimizer /*, is*/ } from '@electron-toolkit/utils'
 import { createTrayAndMenu } from './tray'
-import { createMainWindow } from './mainWindow'
 import { startTracking, stopTracking } from './tracking'
 import data from './data'
+import { createAuthWindow } from './authWindow'
 
 function setUpCrashReporter(): void {
   crashReporter.start({
@@ -40,8 +40,8 @@ app.whenReady().then(() => {
   ipcMain.on('tracking-memo', (_, memo) => {
     data.updateMemo(memo)
   })
+  createAuthWindow()
   createTrayAndMenu()
-  createMainWindow()
   // initAuth()
 
   app.on('activate', function () {

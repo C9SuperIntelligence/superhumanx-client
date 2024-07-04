@@ -1,20 +1,15 @@
 import { type Writable, writable, get } from 'svelte/store'
 import Trackers from './trackers'
-import auth0 from './auth'
+// import auth0 from './auth'
 import data from './data'
+import { getAccessToken } from './authService'
 
 const trackersStore: Writable<Trackers | null> = writable(null)
 
 async function startTracking(): Promise<void> {
   let trackers = get(trackersStore)
   if (trackers) return
-  let userToken: string
-  try {
-    userToken = await auth0.getToken()
-  } catch (error) {
-    console.error(error)
-    return
-  }
+  const userToken = getAccessToken() as string
   trackers = new Trackers()
   trackersStore.set(trackers)
   trackers.start(userToken)

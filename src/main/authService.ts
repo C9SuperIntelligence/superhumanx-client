@@ -93,12 +93,12 @@ async function loadTokens(callbackURL: string): Promise<void> {
   }
 
   try {
+    console.log(options)
     const response = await axios(options)
 
     accessToken = response.data.access_token
     profile = jwtDecode(response.data.id_token)
     refreshToken = response.data.refresh_token
-    console.log('Access token: "%s"', accessToken)
 
     if (refreshToken) {
       await keytar.setPassword(keytarService, keytarAccount, refreshToken)

@@ -98,6 +98,7 @@ async function loadTokens(callbackURL: string): Promise<void> {
     accessToken = response.data.access_token
     profile = jwtDecode(response.data.id_token)
     refreshToken = response.data.refresh_token
+    console.log('Access token: "%s"', accessToken)
 
     if (refreshToken) {
       await keytar.setPassword(keytarService, keytarAccount, refreshToken)

@@ -8,8 +8,10 @@ function createAuthWindow(): void {
   destroyAuthWin()
 
   win = new BrowserWindow({
-    width: 1000,
+    width: 400,
     height: 600,
+    resizable: false,
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: false
     }
@@ -31,6 +33,7 @@ function createAuthWindow(): void {
     return destroyAuthWin()
   })
 
+  // @ts-ignore: This can happen
   win.on('authenticated', () => {
     destroyAuthWin()
   })

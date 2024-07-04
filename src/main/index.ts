@@ -3,6 +3,7 @@ import { electronApp, optimizer /*, is*/ } from '@electron-toolkit/utils'
 import { createTrayAndMenu } from './tray'
 import { startTracking, stopTracking } from './tracking'
 import data from './data'
+import { createMainWindow } from './mainWindow'
 import { createAuthWindow } from './authWindow'
 
 function setUpCrashReporter(): void {
@@ -42,7 +43,6 @@ app.whenReady().then(() => {
   })
   createAuthWindow()
   createTrayAndMenu()
-  // initAuth()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

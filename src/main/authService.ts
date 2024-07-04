@@ -5,10 +5,8 @@ import 'dotenv/config'
 import keytar from 'keytar'
 import os from 'os'
 
-const apiIdentifier = process.env.API_IDENTIFIER
 const auth0Domain = process.env.AUTH0_DOMAIN
 const clientId = process.env.AUTH0_CLIENT_ID
-console.log(apiIdentifier, auth0Domain, clientId)
 
 const redirectUri = 'http://localhost/callback'
 
@@ -93,7 +91,6 @@ async function loadTokens(callbackURL: string): Promise<void> {
   }
 
   try {
-    console.log(options)
     const response = await axios(options)
 
     accessToken = response.data.access_token

@@ -10,7 +10,7 @@ class ExternalTracker {
   }
   public kill(): void {
     console.log('Killing external process')
-    process.kill(this.pid)
+    process.kill(-this.pid)
   }
 }
 

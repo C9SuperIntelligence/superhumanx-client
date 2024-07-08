@@ -1,10 +1,10 @@
 {
   "name": "superhumanx-client",
   "version": "1.0.0",
-  "description": "An Electron application with Svelte and TypeScript",
+  "description": "The future of time-tracking",
   "main": "./out/main/index.js",
   "type": "module",
-  "author": "example.com",
+  "author": "CLOUD 9 VENTURES LLC",
   "homepage": "https://electron-vite.org",
   "scripts": {
     "format": "prettier --plugin prettier-plugin-svelte --write .",

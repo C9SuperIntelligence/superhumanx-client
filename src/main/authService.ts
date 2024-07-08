@@ -5,8 +5,10 @@ import 'dotenv/config'
 import keytar from 'keytar'
 import os from 'os'
 
-const auth0Domain = process.env.AUTH0_DOMAIN
-const clientId = process.env.AUTH0_CLIENT_ID
+// @ts-ignore: TS fails to resovlve the import.meta type
+const auth0Domain = import.meta.env.MAIN_VITE_AUTH0_DOMAIN
+// @ts-ignore: TS fails to resovlve the import.meta type
+const clientId = import.meta.env.MAIN_VITE_AUTH0_CLIENT_ID
 
 const redirectUri = 'http://localhost/callback'
 

@@ -5,6 +5,7 @@ import { startTracking, stopTracking } from './tracking'
 import data from './data'
 import { createMainWindow } from './mainWindow'
 import { createAuthWindow } from './authWindow'
+import { updateElectronApp } from 'update-electron-app'
 
 function setUpCrashReporter(): void {
   crashReporter.start({
@@ -62,3 +63,4 @@ app.whenReady().then(() => {
 //
 
 setUpCrashReporter()
+updateElectronApp()

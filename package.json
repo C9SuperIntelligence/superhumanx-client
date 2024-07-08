@@ -5,7 +5,11 @@
   "main": "./out/main/index.js",
   "type": "module",
   "author": "CLOUD 9 VENTURES LLC",
-  "homepage": "https://electron-vite.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/C9SuperIntelligence/superhumanx-client.git"
+  },
+  "homepage": "https://github.com/C9SuperIntelligence/superhumanx-client",
   "scripts": {
     "format": "prettier --plugin prettier-plugin-svelte --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
@@ -29,7 +33,8 @@
     "jwt-decode": "^4.0.0",
     "keytar": "^7.9.0",
     "regedit": "^5.1.3",
-    "svelte": "^4.2.9"
+    "svelte": "^4.2.9",
+    "update-electron-app": "^3.0.0"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",

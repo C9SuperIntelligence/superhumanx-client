@@ -48,7 +48,7 @@ class Controller {
     this.data.records.push(currentRecord)
     this.data.currentRecord = null
     const mainWindow = getMainWindow()
-    mainWindow.webContents.send('tracking-stopped', this.data.records)
+    mainWindow.webContents.send('tracking-stopped', this.getHistory())
     Controller.database.write()
   }
 }

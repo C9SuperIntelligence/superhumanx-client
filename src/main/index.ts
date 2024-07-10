@@ -42,6 +42,9 @@ app.whenReady().then(() => {
   ipcMain.on('tracking-memo', (_, memo) => {
     data.updateMemo(memo)
   })
+  ipcMain.on('get-version', (event) => {
+    event.reply('version', app.getVersion())
+  })
   createAuthWindow()
   createTrayAndMenu()
 

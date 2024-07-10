@@ -18,6 +18,7 @@ const keytarAccount = os.userInfo().username
 let accessToken = null
 let profile = null
 let refreshToken = null
+let failCount = 0
 
 function getAccessToken(): string | null {
   return accessToken
@@ -120,6 +121,23 @@ function getLogOutUrl(): string {
   return `https://${auth0Domain}/v2/logout`
 }
 
+async function validateToken(): Promise<boolean> {
+  try {
+    await axios({
+      method: 'POST',
+      url: 'https://api.c9superintelligence.com/users/validate',
+      headers: {
+        'content-type': 'application/json',
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+  } catch (error) {
+    failCount += 1
+    return false
+  }
+  return true
+}
+
 export {
   getAccessToken,
   getAuthenticationURL,
@@ -127,5 +145,7 @@ export {
   getProfile,
   loadTokens,
   logout,
-  refreshTokens
+  refreshTokens,
+  failCount,
+  validateToken
 }

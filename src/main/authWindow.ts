@@ -1,10 +1,18 @@
-import { BrowserWindow } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import { createMainWindow } from './mainWindow'
-import { getAuthenticationURL, loadTokens, logout, getLogOutUrl } from './authService'
+import {
+  getAuthenticationURL,
+  loadTokens,
+  logout,
+  getLogOutUrl,
+  validateToken,
+  failCount
+} from './authService'
 
 let win: BrowserWindow | null = null
 
 function createAuthWindow(): void {
+  if (failCount > 5) app.quit()
   destroyAuthWin()
 
   win = new BrowserWindow({
@@ -29,6 +37,7 @@ function createAuthWindow(): void {
 
   webRequest.onBeforeRequest(filter, async ({ url }) => {
     await loadTokens(url)
+    if (!(await validateToken())) return createAuthWindow()
     createMainWindow()
     return destroyAuthWin()
   })

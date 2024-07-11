@@ -6,6 +6,7 @@ import data from './data'
 import { createMainWindow } from './mainWindow'
 import { createAuthWindow } from './authWindow'
 import { updateElectronApp } from 'update-electron-app'
+import { getAccessToken, refreshTokens } from './authService'
 
 function setUpCrashReporter(): void {
   crashReporter.start({
@@ -22,7 +23,7 @@ function setUpCrashReporter(): void {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 
@@ -45,7 +46,12 @@ app.whenReady().then(() => {
   ipcMain.on('get-version', (event) => {
     event.reply('version', app.getVersion())
   })
-  createAuthWindow()
+  await refreshTokens()
+  if (!getAccessToken()) {
+    createAuthWindow()
+  } else {
+    createMainWindow()
+  }
   createTrayAndMenu()
 
   app.on('activate', function () {

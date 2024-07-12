@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 /* :root { */
-/*     --theme-font-family-base: Nunito, sans-serif; */
-/*     --theme-font-family-heading: Nunito, sans-serif !important; */
+/*     --theme-font-family-base: Inter, sans-serif; */
+/*     --theme-font-family-heading: Inter, sans-serif !important; */
 /* } */
 
 body, .h1, .h2, .h3, .h4, .h5 {
-    font-family: Nunito;
+    font-family: Inter;
 }
 
 html, body, #app {

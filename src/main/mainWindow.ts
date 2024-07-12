@@ -45,4 +45,8 @@ function getMainWindow(): BrowserWindow {
   else return createMainWindow()
 }
 
-export { createMainWindow, getMainWindow }
+function closeMainWindow(): void {
+  if (mainWindow) mainWindow.close()
+}
+
+export { createMainWindow, getMainWindow, closeMainWindow }

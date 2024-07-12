@@ -2,6 +2,8 @@ import { Tray, Menu, type MenuItemConstructorOptions, nativeImage } from 'electr
 import appIcon from '../../build/icon.png?asset'
 import { trackersStore, startTracking, stopTracking } from './tracking'
 import { app } from 'electron/main'
+import { accessTokenStore } from './authService'
+import { createLogoutWindow } from './authWindow'
 
 let tray: Tray | null = null
 const statusMenuItem: MenuItemConstructorOptions = {
@@ -26,6 +28,13 @@ const stopTrackingMenuItem: MenuItemConstructorOptions = {
   enabled: true,
   click: stopTracking
 }
+const logoutMenuItem: MenuItemConstructorOptions = {
+  label: 'Logout',
+  type: 'normal',
+  click: (): void => {
+    createLogoutWindow()
+  }
+}
 const exitMenuItem: MenuItemConstructorOptions = {
   label: 'Exit',
   type: 'normal',
@@ -38,6 +47,7 @@ const menuTemplate = [
   separatorMenuItem,
   startTrackingMenuItem,
   stopTrackingMenuItem,
+  logoutMenuItem,
   exitMenuItem
 ]
 
@@ -56,6 +66,15 @@ export function createTrayAndMenu(): void {
       statusMenuItem.label = 'Status: Not tracking'
       startTrackingMenuItem.enabled = true
       stopTrackingMenuItem.enabled = false
+    }
+    menu = Menu.buildFromTemplate(menuTemplate)
+    if (tray) tray.setContextMenu(menu)
+  })
+  accessTokenStore.subscribe((value) => {
+    if (value) {
+      logoutMenuItem.enabled = true
+    } else {
+      logoutMenuItem.enabled = false
     }
     menu = Menu.buildFromTemplate(menuTemplate)
     if (tray) tray.setContextMenu(menu)

@@ -4,6 +4,8 @@ import url from 'url'
 import 'dotenv/config'
 import keytar from 'keytar'
 import os from 'os'
+import { writable } from 'svelte/store'
+import { EventEmitter } from 'events'
 
 // @ts-ignore: TS fails to resovlve the import.meta type
 const auth0Domain = import.meta.env.MAIN_VITE_AUTH0_DOMAIN
@@ -15,14 +17,11 @@ const redirectUri = 'http://localhost/callback'
 const keytarService = 'electron-openid-oauth'
 const keytarAccount = os.userInfo().username
 
-let accessToken = null
+const auth = new EventEmitter()
+const accessTokenStore = writable(null)
 let profile = null
 let refreshToken = null
-let failCount = 0
-
-function getAccessToken(): string | null {
-  return accessToken
-}
+const failCount = 0
 
 function getProfile(): string | null {
   return profile
@@ -61,7 +60,7 @@ async function refreshTokens(): Promise<void> {
     try {
       const response = await axios(refreshOptions)
 
-      accessToken = response.data.access_token
+      accessTokenStore.set(response.data.access_token)
       profile = jwtDecode(response.data.id_token)
     } catch (error) {
       await logout()
@@ -96,7 +95,7 @@ async function loadTokens(callbackURL: string): Promise<void> {
   try {
     const response = await axios(options)
 
-    accessToken = response.data.access_token
+    accessTokenStore.set(response.data.access_token)
     profile = jwtDecode(response.data.id_token)
     refreshToken = response.data.refresh_token
 
@@ -112,7 +111,7 @@ async function loadTokens(callbackURL: string): Promise<void> {
 
 async function logout(): Promise<void> {
   await keytar.deletePassword(keytarService, keytarAccount)
-  accessToken = null
+  accessTokenStore.set(null)
   profile = null
   refreshToken = null
 }
@@ -121,32 +120,41 @@ function getLogOutUrl(): string {
   return `https://${auth0Domain}/v2/logout`
 }
 
-async function validateToken(): Promise<boolean> {
+//async function validateToken(): Promise<boolean> {
+//  try {
+//    await axios({
+//      method: 'POST',
+//      url: 'https://api.c9superintelligence.com/users/validate',
+//      headers: {
+//        'content-type': 'application/json',
+//        Authorization: `Bearer ${accessToken}`
+//      }
+//    })
+//  } catch (error) {
+//    failCount += 1
+//    return false
+//  }
+//  return true
+//}
+
+auth.on('init', async () => {
   try {
-    return true
-    await axios({
-      method: 'POST',
-      url: 'https://api.c9superintelligence.com/users/validate',
-      headers: {
-        'content-type': 'application/json',
-        Authorization: `Bearer ${accessToken}`
-      }
-    })
+    await refreshTokens()
+    auth.emit('loggedIn')
   } catch (error) {
-    failCount += 1
-    return false
+    auth.emit('loggedOut')
+    console.error(error)
   }
-  return true
-}
+})
 
 export {
-  getAccessToken,
+  auth,
+  accessTokenStore,
   getAuthenticationURL,
   getLogOutUrl,
   getProfile,
   loadTokens,
   logout,
   refreshTokens,
-  failCount,
-  validateToken
+  failCount
 }

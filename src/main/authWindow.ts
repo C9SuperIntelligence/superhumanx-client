@@ -5,8 +5,8 @@ import {
   loadTokens,
   logout,
   getLogOutUrl,
-  validateToken,
-  failCount
+  failCount,
+  auth
 } from './authService'
 
 let win: BrowserWindow | null = null
@@ -37,7 +37,7 @@ function createAuthWindow(): void {
 
   webRequest.onBeforeRequest(filter, async ({ url }) => {
     await loadTokens(url)
-    if (!(await validateToken())) return createAuthWindow()
+    //if (!(await validateToken())) return createAuthWindow()
     createMainWindow()
     return destroyAuthWin()
   })
@@ -68,6 +68,7 @@ function createLogoutWindow(): void {
   logoutWindow.on('ready-to-show', async () => {
     await logout()
     logoutWindow.close()
+    auth.emit('loggedOut')
   })
 }
 

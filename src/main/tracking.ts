@@ -1,7 +1,7 @@
 import { type Writable, writable, get } from 'svelte/store'
 import Trackers from './trackers'
 import data from './data'
-import { getAccessToken } from './authService'
+import { accessTokenStore } from './authService'
 import { Notification } from 'electron/main'
 
 const trackersStore: Writable<Trackers | null> = writable(null)
@@ -9,7 +9,7 @@ const trackersStore: Writable<Trackers | null> = writable(null)
 async function startTracking(): Promise<void> {
   let trackers = get(trackersStore)
   if (trackers) return
-  const userToken = getAccessToken()
+  const userToken = get(accessTokenStore)
   if (!userToken) {
     const notification = new Notification({
       title: 'Required to login',

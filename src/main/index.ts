@@ -3,10 +3,10 @@ import { electronApp, optimizer /*, is*/ } from '@electron-toolkit/utils'
 import { createTrayAndMenu } from './tray'
 import { startTracking, stopTracking } from './tracking'
 import data from './data'
-import { createMainWindow } from './mainWindow'
+import { closeMainWindow, createMainWindow } from './mainWindow'
 import { createAuthWindow } from './authWindow'
 import { updateElectronApp } from 'update-electron-app'
-import { getAccessToken, refreshTokens } from './authService'
+import { auth } from './authService'
 
 function setUpCrashReporter(): void {
   crashReporter.start({
@@ -46,12 +46,16 @@ app.whenReady().then(async () => {
   ipcMain.on('get-version', (event) => {
     event.reply('version', app.getVersion())
   })
-  await refreshTokens()
-  if (!getAccessToken()) {
+
+  auth.on('loggedIn', createMainWindow)
+  auth.on('loggedOut', () => {
+    stopTracking()
+    closeMainWindow()
     createAuthWindow()
-  } else {
-    createMainWindow()
-  }
+  })
+
+  auth.emit('init')
+
   createTrayAndMenu()
 
   app.on('activate', function () {

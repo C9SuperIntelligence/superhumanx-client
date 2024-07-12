@@ -52,13 +52,15 @@
     <button
       on:click={requestStopTracking}
       type="button"
-      class="btn variant-filled rounded-full p-4 m-2"><Stop /></button
+      class="btn variant-filled bg-gradient-to-r from-[#9836E7] to-[#5826F7] rounded-full p-4 m-2"
+      ><Stop /></button
     >
   </div>
 {:else}
   <button
     on:click={requestStartTracking}
     type="button"
-    class="btn variant-filled rounded-full p-3 m-2"><Play /></button
+    class="btn variant-filled bg-gradient-to-r from-[#9836E7] to-[#5826F7] rounded-full p-3 m-2"
+    ><Play /></button
   >
 {/if}

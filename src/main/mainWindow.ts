@@ -2,10 +2,13 @@ import { shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { get } from 'svelte/store'
+import { accessTokenStore } from './authService'
 
 let mainWindow
 
 function createMainWindow(): BrowserWindow {
+  if (import.meta.env.DEV) console.log(get(accessTokenStore))
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 300,

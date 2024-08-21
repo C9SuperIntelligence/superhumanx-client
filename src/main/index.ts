@@ -5,8 +5,8 @@ import { startTracking, stopTracking } from './tracking'
 import data from './data'
 import { closeMainWindow, createMainWindow } from './mainWindow'
 import { createAuthWindow } from './authWindow'
-import { autoUpdater } from 'electron-updater'
 import { auth } from './authService'
+import { setUpUpdater } from './updater'
 
 function setUpCrashReporter(): void {
   crashReporter.start({
@@ -76,9 +76,4 @@ app.whenReady().then(async () => {
 //
 
 setUpCrashReporter()
-setInterval(
-  () => {
-    autoUpdater.checkForUpdatesAndNotify()
-  },
-  10 * 60 * 1000
-)
+setUpUpdater()

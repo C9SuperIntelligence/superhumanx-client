@@ -14,13 +14,7 @@ class Trackers {
   // private connectionTracker: ConnectionTracker = new ConnectionTracker()
   // private pointerTracker: PointerTracker = new PointerTracker()
   // private fileTracker: FileTracker = new FileTracker()
-  private inputTracker: ExternalTracker | null = null
-  private processTracker: ExternalTracker | null = null
-  private connectionTracker: ExternalTracker | null = null
-  private screenTracker: ExternalTracker | null = null
-  private windowTracker: ExternalTracker | null = null
-  private fileTracker: ExternalTracker | null = null
-  private printTracker: ExternalTracker | null = null
+  private universalTracker: ExternalTracker | null = null
   // constructor() {
   // this.scheduleFlushes()
   // }
@@ -35,13 +29,7 @@ class Trackers {
         }
       }
     })
-    this.inputTracker = new ExternalTracker('input_monitor.exe')
-    this.processTracker = new ExternalTracker('process_monitor.exe')
-    this.connectionTracker = new ExternalTracker('net_monitor.exe')
-    this.screenTracker = new ExternalTracker('screen_monitor.exe')
-    this.windowTracker = new ExternalTracker('window_monitor.exe')
-    this.fileTracker = new ExternalTracker('file_handle_monitor.exe')
-    this.printTracker = new ExternalTracker('print_monitor.exe')
+    this.universalTracker = new ExternalTracker('theye.exe')
   }
   async flushAll(): Promise<void> {
     // console.log(this.keylogger.flush())
@@ -52,25 +40,9 @@ class Trackers {
   }
 
   async killAll(): Promise<void> {
-    if (
-      process.platform !== 'win32' ||
-      !this.inputTracker ||
-      !this.processTracker ||
-      !this.connectionTracker ||
-      !this.screenTracker ||
-      !this.windowTracker ||
-      !this.fileTracker ||
-      !this.printTracker
-    )
-      return
+    if (process.platform !== 'win32' || !this.universalTracker) return
 
-    this.inputTracker.kill()
-    this.processTracker.kill()
-    this.connectionTracker.kill()
-    this.screenTracker.kill()
-    this.windowTracker.kill()
-    this.fileTracker.kill()
-    this.printTracker.kill()
+    this.universalTracker.kill()
   }
 
   scheduleFlushes(): void {

@@ -1,6 +1,6 @@
 {
   "name": "superhumanx-client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The future of time-tracking",
   "main": "./out/main/index.js",
   "type": "module",

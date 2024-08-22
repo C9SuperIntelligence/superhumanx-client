@@ -1,5 +1,5 @@
-appId: com.c9-superinteligence.superhumanX
-productName: superhumanX
+appId: com.c9superinteligence.SuperHumanX
+productName: SuperHumanX
 directories:
   buildResources: build
 files:
@@ -12,15 +12,23 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: superhumanX
+  executableName: SuperHumanX
   target:
     - Squirrel
-    - nsis
+  
+  publish:
+    - provider: github
+      protocol: https
+      releaseType: release
+  signingHashAlgorithms:
+    - sha256
+  certificateSubjectName: "CLOUD 9 VENTURES LLC"
+  timeStampServer: "http://timestamp.globalsign.com/tsa/r6advanced1"
+  rfc3161TimeStampServer: "http://timestamp.globalsign.com/tsa/r6advanced1"
+  publisherName: "CLOUD 9 VENTURES LLC"
 squirrelWindows:
-  loadingGif: build/loading.gif
-  msi: true
-  remoteReleases: undefined
-  remoteToken: undefined
+  msi: false
+  remoteReleases: true
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
@@ -46,6 +54,3 @@ linux:
 appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
-publish:
-  provider: generic
-  url: https://example.com/auto-updates
